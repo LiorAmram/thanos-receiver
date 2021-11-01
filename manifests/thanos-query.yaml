@@ -44,7 +44,7 @@ spec:
         - --store=dnssrv+_grpc._tcp.thanos-receive-default.thanos.svc.cluster.local
         - --store=dnssrv+_grpc._tcp.thanos-receive-hashring-0.thanos.svc.cluster.local
         - --query.timeout=15m
-        image: quay.io/thanos/thanos:v0.14.0
+        image: quay.io/thanos/thanos:v0.23.0
         livenessProbe:
           failureThreshold: 4
           httpGet:
@@ -87,6 +87,9 @@ spec:
   selector:
     app: thanos-query
     part-of: thanos
+  externalIPs:
+  - 10.189.200.102
+  - 10.189.200.101
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

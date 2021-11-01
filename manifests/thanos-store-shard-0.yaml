@@ -31,13 +31,16 @@ spec:
         - --data-dir=/var/thanos/store
         - --objstore.config=$(OBJSTORE_CONFIG)
         - --max-time=-2w
+        - --sync-block-duration=5m
         env:
         - name: OBJSTORE_CONFIG
           valueFrom:
             secretKeyRef:
               key: thanos-s3.yaml
               name: thanos-objectstorage
-        image: quay.io/thanos/thanos:v0.14.0
+        - name: http_proxy
+          value: http://proxy-iil.intel.com:911
+        image: quay.io/thanos/thanos:v0.23.0
         livenessProbe:
           failureThreshold: 8
           httpGet:
