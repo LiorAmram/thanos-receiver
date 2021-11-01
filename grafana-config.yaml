@@ -1,0 +1,21 @@
+server:
+  log_level: info
+  http_listen_port: 12345
+
+metrics:
+  global:
+    scrape_interval: 15s
+    remote_write:
+      - url: http://10.189.200.101:19291/api/v1/receive  # thanos IP
+  configs:
+    - name: default
+      scrape_configs:
+        - job_name: public-cloud
+          static_configs:
+            - labels:
+                job: public-cloud
+            - targets: ['dbio-icx1.iil.intel.com:8090', 'dbio-icx2.iil.intel.com:8090']  # targets to collect metrics from
+
+# Running grafana agent:
+# docker run -v /tmp/agent/data:/tmp/agent/data grafana/agent:v0.19.0 --prometheus.wal-directory=/tmp/agent/data --config.file=/tmp/agent/data/grafana-config.yaml
+# (config file should be copied into the specified directory)
